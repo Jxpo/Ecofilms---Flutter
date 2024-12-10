@@ -66,6 +66,8 @@ flutter:
     - assets/img/baby.png
     - assets/img/nigh.png
     - assets/img/
+    - assets/iconebar/
+
 
   fonts:
     - family: Antonio

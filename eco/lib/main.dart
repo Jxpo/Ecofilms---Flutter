@@ -1,16 +1,20 @@
+import 'package:eco/pages/Pesquisa.dart';
 import 'package:flutter/material.dart';
 import 'package:eco/pages/Cadastro.dart';
 import 'package:eco/pages/Catalogo.dart';
 import 'package:eco/pages/Login.dart';
 import 'package:eco/pages/PlayerFilme.dart';
 import 'package:eco/pages/Selecaoperfil.dart';
-import 'package:eco/pages/TelaFilme.dart';  // Apenas importe uma vez
+import 'package:eco/pages/TelaFilme.dart';
+import 'package:eco/pages/Downloads.dart';
+import 'package:eco/pages/Perfil.dart';
+import 'package:eco/pages/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Garante que a ligação dos widgets do Flutter esteja inicializada antes de usar qualquer plugin
-  await Firebase.initializeApp(); // Inicializa o Firebase na aplicação
-  runApp(const MyApp()); // Executa a aplicação iniciando pela classe MyApp
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp()); 
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,17 +24,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/Login',
       routes: {
-        '/Login': (context) => Login(),
+        '/Login': (context) => Splash(),
         '/cadastro': (context) => const Cadastro(),
         '/Catalogo': (context) => const Catalogo(),
         '/Selecaoperfil': (context) => const Selecaoperfil(),
         '/PlayerFilme': (context) => YoutubeVideoPage(),
+        '/Splashscreen': (context) => Splash(),
+        '/Perfil' : (context) => Perfil(),
+        '/Downloads' : (context) => Downloads(),
+        '/Pesquisa' : (context) => Pesquisa(),
         '/TelaFilme': (context) => TelaFilme( 
           titulo: '', 
           descricao: '', 
           imagemPoster: '', 
           duracao: '', 
-
           recomendacoes: [],
         ), 
       },
