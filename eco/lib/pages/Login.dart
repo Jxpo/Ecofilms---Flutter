@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,6 +16,7 @@ class _LoginState extends State<Login> {
   final FirebaseAuth _auth = FirebaseAuth.instance; // Instância do FirebaseAuth para autenticação
   final TextEditingController _emailController = TextEditingController(); // Controlador para o campo de e-mail
   final TextEditingController _passwordController = TextEditingController(); // Controlador para o campo de senha
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -42,6 +44,27 @@ class _LoginState extends State<Login> {
       duration: Duration(seconds: 2), // Duração de exibição do SnackBar
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<User?> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      return userCredential.user;
+    } catch (e) {
+      print("Erro ao fazer login: $e");
+      return null;
+    }
   }
 
   @override
@@ -197,6 +220,16 @@ class _LoginState extends State<Login> {
                             
                           ),
                         ),
+
+                        GestureDetector(
+                          child: Image.asset('assets/img/icongoogle.png',
+                            width: 60,
+                            height: 60,),
+                            onTap: () {
+                              _signInWithGoogle();
+                            },
+                        ),
+                        
                         GestureDetector(
                           child: const Text(
                             'Não tem uma conta',

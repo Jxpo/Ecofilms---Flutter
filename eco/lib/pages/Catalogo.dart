@@ -51,6 +51,7 @@ class _CatalogoState extends State<Catalogo> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3),
                         )),
+                      
                   ),
                   const SizedBox(
                     width: 20,
